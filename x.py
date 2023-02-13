@@ -2,16 +2,28 @@ import pygame
 from random import randint
 from ladrillo import Brick
 
+
 # Setup del juego
 pygame.init()
+pygame.mixer.init()
 ventana = pygame.display.set_mode((720, 1020))
 pygame.display.set_caption("Juego Oussama y Asier")
+
+# Musica
+musica_fondo = pygame.mixer.Sound("champions.wav")
+pitido = pygame.mixer.Sound("pitido.mp3")
+rebote = pygame.mixer.Sound("rebote.wav")
+pygame.mixer.Sound.play(musica_fondo)
 
 # Fondo de pantalla
 fondo = pygame.image.load("campo.jpg")
 fondo = pygame.transform.scale(fondo, (720, 1020))
 
 # Bases del ladrillo
+# 4 columnas 5 filas
+lista_ladrillos = []
+
+# Bases de la roca
 brik1 = Brick(40, 400, "messi.png")
 
 # Bases de la pelota
@@ -30,9 +42,8 @@ fuente = pygame.font.Font(None, 36)
 
 # Base fin de juego
 texto = pygame.image.load("over.png")
+texto = pygame.transform.scale(texto, (700, 300))
 texto_rect = texto.get_rect()
-texto_x = ventana.get_width() / 2 - texto_rect.width / 2
-texto_y = ventana.get_height() / 2 - texto_rect.height / 2
 
 # Funciones del juego
 jugando = True
@@ -49,35 +60,43 @@ while jugando:
     # Velocidad al colisionar con la barra
     if barrarect.colliderect(ballrect):
         speed[1] = -speed[1]
+        pygame.mixer.Sound.play(rebote)
         if speed[0] < 20 and speed[1] < 20:
             speed[0] += 1
             if speed[1] < 0:
-                speed[1] -= 1
+                speed[1] -= 3
             else:
-                speed[1] += 1
+                speed[1] += 3
 
     ballrect = ballrect.move(speed[0],speed[1])
     if ballrect.left < 0 or ballrect.right > ventana.get_width():
         speed[0] = -speed[0]
     if ballrect.top < 0:
         speed[1] = -speed[1]
+
     # Colision con Rocas
     if ballrect.colliderect(brik1.rect):
         speed[1] = -speed[1]
+
     # Limites Laterales
     if barrarect.right > 724:
         barrarect.right = 723
     if barrarect.left < 0:
         barrarect.left = 1
 
+    # Refresh Ventana
     ventana.blit(fondo, (0,0))
     ventana.blit(brik1.image, brik1.rect)
     ventana.blit(ball, ballrect)
     ventana.blit(barra, barrarect)
 
     # Pantalla de derrota
-    if ballrect.bottom > 1000:
+    if ballrect.bottom > 1010:
+        speed = [0, 0]
         ventana.blit(texto, texto_rect)
+        pygame.mixer.Sound.play(pitido,1)
+        pygame.mixer.Sound.stop(musica_fondo)
+
 
     pygame.display.flip()
     pygame.time.Clock().tick(120)
