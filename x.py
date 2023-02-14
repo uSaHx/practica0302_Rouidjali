@@ -79,12 +79,12 @@ while jugando:
     if barrarect.colliderect(ballrect):
         speed[1] = -speed[1]
         pygame.mixer.Sound.play(rebote)
-        if speed[0] < 20 and speed[1] < 20:
+        if speed[0] < 15 and speed[1] < 15:
             speed[0] += 1
             if speed[1] < 0:
-                speed[1] -= randint(-2,2)
+                speed[1] -= 2
             else:
-                speed[1] += (-2,2)
+                speed[1] += 2
 
     ballrect = ballrect.move(speed[0],speed[1])
     if ballrect.left < 0 or ballrect.right > ventana.get_width():
