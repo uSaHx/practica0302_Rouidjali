@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+from ladrillo import Brickvida
 from ladrillo import Brick
 
 
@@ -20,18 +21,34 @@ fondo = pygame.image.load("campo.jpg")
 fondo = pygame.transform.scale(fondo, (720, 1020))
 
 # Bases del ladrillo
-# 4 columnas 5 filas
 lista_ladrillos = []
+columnas = 9
+filas = 3
+for columna in range(columnas):
+    for fila in range(filas):
+        if columna == 0:
+            espaciox = 0
+        else:
+            espaciox = 10
+        if fila == 0:
+            espacioy = 0
+        else:
+            espacioy = 30
+        brick = Brickvida(columna * 70 + espaciox * columna, fila * 100 + espacioy * fila, "messi.png",randint(1,2))
+        lista_ladrillos.append(brick)
 
 # Bases de la roca
-brik1 = Brick(40, 400, "messi.png")
+roca1 = Brick(0, 430, "ronaldo.png")
+roca2 = Brick(80, 430, "ronaldo.png")
+roca3 = Brick(560, 430, "ronaldo.png")
+roca4 = Brick(640, 430, "ronaldo.png")
 
 # Bases de la pelota
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (50, 50))
 ballrect = ball.get_rect()
 speed = [randint(2,5),randint(2,5)]
-ballrect.move_ip(0,0)
+ballrect.move_ip(600,600)
 
 # Bases de la barra
 barra = pygame.image.load("botas.png")
@@ -51,6 +68,7 @@ while jugando:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             jugando = False
+    # Teclas para jugar
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         barrarect = barrarect.move(-5,0)
@@ -64,9 +82,9 @@ while jugando:
         if speed[0] < 20 and speed[1] < 20:
             speed[0] += 1
             if speed[1] < 0:
-                speed[1] -= 3
+                speed[1] -= randint(-2,2)
             else:
-                speed[1] += 3
+                speed[1] += (-2,2)
 
     ballrect = ballrect.move(speed[0],speed[1])
     if ballrect.left < 0 or ballrect.right > ventana.get_width():
@@ -75,8 +93,12 @@ while jugando:
         speed[1] = -speed[1]
 
     # Colision con Rocas
-    if ballrect.colliderect(brik1.rect):
+    if ballrect.colliderect(roca1.rect) or ballrect.colliderect(roca2.rect) \
+            or ballrect.colliderect(roca3.rect) or ballrect.colliderect(roca4.rect):
         speed[1] = -speed[1]
+    for f in range(len(lista_ladrillos)):
+        if ballrect.colliderect(lista_ladrillos[f]):
+            speed[1] = -speed[1]
 
     # Limites Laterales
     if barrarect.right > 724:
@@ -86,7 +108,12 @@ while jugando:
 
     # Refresh Ventana
     ventana.blit(fondo, (0,0))
-    ventana.blit(brik1.image, brik1.rect)
+    for x in lista_ladrillos:
+        ventana.blit(x.image, x.rect)
+    ventana.blit(roca1.image, roca1.rect)
+    ventana.blit(roca2.image, roca2.rect)
+    ventana.blit(roca3.image, roca3.rect)
+    ventana.blit(roca4.image, roca4.rect)
     ventana.blit(ball, ballrect)
     ventana.blit(barra, barrarect)
 
@@ -94,11 +121,8 @@ while jugando:
     if ballrect.bottom > 1010:
         speed = [0, 0]
         ventana.blit(texto, texto_rect)
-        pygame.mixer.Sound.play(pitido,1)
+        pygame.mixer.Sound.play(pitido, 1)
         pygame.mixer.Sound.stop(musica_fondo)
-
-
     pygame.display.flip()
-    pygame.time.Clock().tick(120)
-
+    pygame.time.Clock().tick(60)
 pygame.quit()

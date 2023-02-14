@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f76b4fd5-96fd-487e-bc8c-580f62a96044" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/champions.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pitido.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ladrillo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ladrillo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/over.png" beforeDir="false" afterPath="$PROJECT_DIR$/over.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messi.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/messi.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronaldo.png" beforeDir="false" afterPath="$PROJECT_DIR$/ronaldo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/x.py" beforeDir="false" afterPath="$PROJECT_DIR$/x.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +34,8 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "full.screen.before.presentation.mode": "false"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
